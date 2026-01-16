@@ -297,16 +297,17 @@ custom_css = """
 """
 
 # Configuração da interface com tema dark
+# Theme e CSS serão passados para launch() para compatibilidade com Gradio 6.0
+theme_config = gr.themes.Default(
+    primary_hue="blue",
+    secondary_hue="purple",
+    neutral_hue="gray",
+    spacing_size="md",
+    radius_size="lg",
+    font=[gr.themes.GoogleFont("Inter"), "system-ui", "sans-serif"]
+)
+
 with gr.Blocks(
-    theme=gr.themes.Default(
-        primary_hue="blue",
-        secondary_hue="purple",
-        neutral_hue="gray",
-        spacing_size="md",
-        radius_size="lg",
-        font=[gr.themes.GoogleFont("Inter"), "system-ui", "sans-serif"]
-    ),
-    css=custom_css,
     title="Deep Research - Ferramenta de Pesquisa Avançada com IA"
 ) as ui:
     
@@ -468,6 +469,8 @@ if __name__ == "__main__":
     port = int(os.environ.get("PORT", 7860))
     
     ui.launch(
+        theme=theme_config,
+        css=custom_css,
         inbrowser=False,  # Desabilitar browser automático no Cloud Run
         share=False,
         server_name="0.0.0.0",  # Escutar em todas as interfaces
