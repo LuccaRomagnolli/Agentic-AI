@@ -2,6 +2,9 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
+# Atualizar pip primeiro para melhor resolução de dependências
+RUN pip install --upgrade pip setuptools wheel
+
 COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
