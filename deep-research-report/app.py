@@ -469,11 +469,8 @@ if __name__ == "__main__":
     
     ui.launch(
         inbrowser=False,  # Desabilitar browser automático no Cloud Run
-        favicon_path=None,
-        show_api=False,
         share=False,
         server_name="0.0.0.0",  # Escutar em todas as interfaces
         server_port=port,       # Usar porta do ambiente
-        quiet=False,
         show_error=True
     )
