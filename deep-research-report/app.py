@@ -21,185 +21,227 @@ async def send_report_email(email: str, report: str):
         # Atualiza o email do destinatário
         update_recipient_email(email)
         
-        # Envia o email usando o email_agent
-        await email_agent.run(f"Envie um email com o seguinte relatório: {report}")
+        # Envia o email usando o email_agent com Runner
+        from agents import Runner
+        await Runner.run(
+            email_agent,
+            f"Envie um email com o seguinte relatório: {report}"
+        )
         
         return f"✅ Relatório enviado com sucesso para {email}!"
         
     except Exception as e:
         return f"❌ Erro ao enviar email: {str(e)}"
 
-# CSS customizado para tema dark completo
+# CSS profissional e moderno
 custom_css = """
-    /* Reset e configuração base dark */
-    .gradio-container {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%) !important;
-        min-height: 100vh !important;
-    }
+    /* Importar fontes */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
     
-    /* Fundo principal escuro */
-    body, .dark {
-        background-color: #000000 !important;
+    /* Reset global */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
     
     /* Container principal */
-    .contain {
-        max-width: 1000px !important;
-        margin: auto;
-        padding: 2rem !important;
+    .gradio-container {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+        background: #0a0a0a !important;
+        min-height: 100vh !important;
     }
     
-    /* Cabeçalho do título */
+    body {
+        background: #0a0a0a !important;
+        overflow-x: hidden !important;
+    }
+    
+    /* Wrapper centralizado */
+    .contain {
+        max-width: 900px !important;
+        margin: 0 auto !important;
+        padding: 3rem 1.5rem !important;
+    }
+    
+    /* Header do aplicativo */
     #title-header {
         text-align: center;
-        margin-bottom: 1.5rem;
-        padding: 2rem 0;
-        border-bottom: 1px solid #2a2a2a;
+        margin-bottom: 3rem;
+        padding: 0 1rem;
     }
     
     #title-header h1 {
-        background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #ec4899 100%);
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: 900;
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        font-size: 3.5rem;
-        font-weight: 900;
-        margin-bottom: 0.5rem;
-        letter-spacing: -0.02em;
-        animation: gradient 3s ease infinite;
+        margin-bottom: 1rem;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
     }
     
-    @keyframes gradient {
-        0% { filter: hue-rotate(0deg); }
-        100% { filter: hue-rotate(360deg); }
+    .subtitle {
+        font-size: 1.125rem;
+        color: #9ca3af;
+        font-weight: 400;
+        line-height: 1.6;
+        max-width: 600px;
+        margin: 0 auto;
     }
     
-    /* Subtítulo */
-    #subtitle {
-        text-align: center;
-        color: #9ca3af !important;
-        font-size: 1.1rem;
-        margin-bottom: 2.5rem;
-        font-weight: 300;
+    /* Cards e containers */
+    .gr-form, .gr-box, .gr-group {
+        background: linear-gradient(145deg, #111111 0%, #0d0d0d 100%) !important;
+        border: 1px solid #1f1f1f !important;
+        border-radius: 20px !important;
+        padding: 2rem !important;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
+        margin-bottom: 1.5rem !important;
     }
     
-    /* Todos os grupos e containers */
-    .gr-group, .gr-box, .gr-form {
-        background: #0f0f0f !important;
-        border-radius: 16px !important;
-        padding: 24px !important;
-        border: 1px solid #2a2a2a !important;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
+    /* Section headers */
+    .section-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #1f1f1f;
     }
     
-    /* Labels e textos */
-    label, .gr-label, .label-wrap label {
+    .section-header h3 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #f3f4f6;
+        margin: 0;
+    }
+    
+    /* Labels */
+    label, .gr-label {
         color: #e5e7eb !important;
-        font-weight: 500 !important;
-        font-size: 0.95rem !important;
-        margin-bottom: 0.5rem !important;
-    }
-    
-    /* Markdown headers */
-    h3 {
-        color: #f3f4f6 !important;
         font-weight: 600 !important;
-        margin-bottom: 1rem !important;
-        font-size: 1.25rem !important;
+        font-size: 0.875rem !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+        margin-bottom: 0.75rem !important;
+        display: block !important;
     }
     
-    /* Input de texto */
-    textarea, .gr-text-input, .gr-textbox textarea, input[type="email"], .gr-textbox input {
-        background: #0f0f0f !important;
-        border: 1px solid #2a2a2a !important;
-        color: #f3f4f6 !important;
-        border-radius: 12px !important;
-        padding: 14px !important;
+    /* Inputs */
+    textarea, input[type="text"], input[type="email"], .gr-textbox textarea, .gr-textbox input {
+        background: #0a0a0a !important;
+        border: 2px solid #1f1f1f !important;
+        color: #f9fafb !important;
+        border-radius: 14px !important;
+        padding: 1rem 1.25rem !important;
         font-size: 1rem !important;
-        transition: all 0.3s ease !important;
+        font-weight: 400 !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        line-height: 1.5 !important;
     }
     
-    textarea:focus, .gr-text-input:focus, input[type="email"]:focus, .gr-textbox input:focus {
-        border-color: #60a5fa !important;
-        box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1) !important;
+    textarea:focus, input:focus, .gr-textbox textarea:focus, .gr-textbox input:focus {
+        border-color: #3b82f6 !important;
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1) !important;
         outline: none !important;
-        background: #0f0f0f !important;
+        background: #0d0d0d !important;
     }
     
-    textarea::placeholder, input[type="email"]::placeholder {
+    textarea::placeholder, input::placeholder {
         color: #6b7280 !important;
+        font-weight: 400 !important;
     }
     
-    /* Botão principal */
+    /* Botão primário */
     .gr-button-primary, button.primary {
         background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%) !important;
         border: none !important;
         color: white !important;
-        padding: 14px 32px !important;
-        border-radius: 12px !important;
-        font-weight: 600 !important;
-        font-size: 1.05rem !important;
+        padding: 1rem 2.5rem !important;
+        border-radius: 14px !important;
+        font-weight: 700 !important;
+        font-size: 1rem !important;
+        letter-spacing: 0.02em !important;
         cursor: pointer !important;
-        transition: all 0.3s ease !important;
-        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3) !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3) !important;
+        text-transform: uppercase !important;
     }
     
     .gr-button-primary:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 6px 25px rgba(59, 130, 246, 0.4) !important;
-        background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%) !important;
+        transform: translateY(-3px) !important;
+        box-shadow: 0 15px 40px rgba(59, 130, 246, 0.4) !important;
     }
     
     .gr-button-primary:active {
-        transform: translateY(0) !important;
+        transform: translateY(-1px) !important;
     }
     
-    /* Botão secundário para email */
+    /* Botão secundário */
     .gr-button-secondary, button.secondary {
         background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
         border: none !important;
         color: white !important;
-        padding: 12px 24px !important;
-        border-radius: 12px !important;
-        font-weight: 600 !important;
+        padding: 0.875rem 2rem !important;
+        border-radius: 14px !important;
+        font-weight: 700 !important;
         font-size: 0.95rem !important;
+        letter-spacing: 0.02em !important;
         cursor: pointer !important;
-        transition: all 0.3s ease !important;
-        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3) !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3) !important;
+        text-transform: uppercase !important;
     }
     
     .gr-button-secondary:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 6px 25px rgba(16, 185, 129, 0.4) !important;
-        background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+        transform: translateY(-3px) !important;
+        box-shadow: 0 15px 40px rgba(16, 185, 129, 0.4) !important;
     }
     
-    /* Área de relatório */
+    /* Área do relatório */
     #report-output {
-        background: #0a0a0a !important;
-        border: 1px solid #262626 !important;
-        border-radius: 12px !important;
-        padding: 24px !important;
+        background: #0d0d0d !important;
+        border: 2px solid #1f1f1f !important;
+        border-radius: 16px !important;
+        padding: 2rem !important;
         color: #e5e7eb !important;
         min-height: 500px !important;
         max-height: 700px !important;
         overflow-y: auto !important;
+        line-height: 1.8 !important;
     }
     
-    #report-output * {
-        color: #e5e7eb !important;
-    }
-    
-    #report-output h1, #report-output h2, #report-output h3 {
+    #report-output h1 {
         color: #f9fafb !important;
-        margin-top: 1.5rem !important;
-        margin-bottom: 1rem !important;
+        font-size: 2rem !important;
+        font-weight: 800 !important;
+        margin: 2rem 0 1rem 0 !important;
+        line-height: 1.2 !important;
+    }
+    
+    #report-output h2 {
+        color: #f3f4f6 !important;
+        font-size: 1.5rem !important;
+        font-weight: 700 !important;
+        margin: 1.75rem 0 1rem 0 !important;
+        line-height: 1.3 !important;
+    }
+    
+    #report-output h3 {
+        color: #e5e7eb !important;
+        font-size: 1.25rem !important;
+        font-weight: 600 !important;
+        margin: 1.5rem 0 0.75rem 0 !important;
     }
     
     #report-output p {
-        line-height: 1.7 !important;
-        margin-bottom: 1rem !important;
+        color: #d1d5db !important;
+        line-height: 1.8 !important;
+        margin-bottom: 1.25rem !important;
+        font-size: 1rem !important;
     }
     
     #report-output em {
@@ -207,227 +249,332 @@ custom_css = """
         font-style: italic !important;
     }
     
-    /* Scrollbar customizada */
+    #report-output strong {
+        color: #f3f4f6 !important;
+        font-weight: 600 !important;
+    }
+    
+    #report-output ul, #report-output ol {
+        margin: 1rem 0 1rem 1.5rem !important;
+        color: #d1d5db !important;
+    }
+    
+    #report-output li {
+        margin-bottom: 0.5rem !important;
+        line-height: 1.7 !important;
+    }
+    
+    /* Scrollbar personalizada */
     ::-webkit-scrollbar {
-        width: 10px !important;
-        height: 10px !important;
+        width: 12px;
+        height: 12px;
     }
     
     ::-webkit-scrollbar-track {
-        background: #1a1a1a !important;
-        border-radius: 10px !important;
+        background: #0a0a0a;
+        border-radius: 10px;
     }
     
     ::-webkit-scrollbar-thumb {
-        background: #4a4a4a !important;
-        border-radius: 10px !important;
+        background: linear-gradient(180deg, #3b82f6 0%, #8b5cf6 100%);
+        border-radius: 10px;
+        border: 2px solid #0a0a0a;
     }
     
     ::-webkit-scrollbar-thumb:hover {
-        background: #5a5a5a !important;
+        background: linear-gradient(180deg, #2563eb 0%, #7c3aed 100%);
     }
     
-    /* Separador HR */
+    /* Divisor */
     hr {
         border: none !important;
-        border-top: 1px solid #2a2a2a !important;
-        margin: 2rem 0 !important;
+        border-top: 1px solid #1f1f1f !important;
+        margin: 2.5rem 0 !important;
+        opacity: 0.5 !important;
     }
     
     /* Footer */
     .footer-info {
         text-align: center;
-        margin-top: 3rem;
-        padding: 2rem;
-        background: #0a0a0a;
-        border-radius: 16px;
-        border: 1px solid #1a1a1a;
+        margin-top: 4rem;
+        padding: 2.5rem 2rem;
+        background: linear-gradient(145deg, #111111 0%, #0d0d0d 100%);
+        border-radius: 20px;
+        border: 1px solid #1f1f1f;
     }
     
     .footer-info p {
-        color: #6b7280 !important;
-        font-size: 0.9rem;
-        margin: 0.5rem 0;
+        color: #9ca3af !important;
+        font-size: 0.95rem;
+        margin: 0.75rem 0;
+        line-height: 1.6;
     }
     
     .footer-info .tip {
         color: #60a5fa !important;
-        font-weight: 500;
+        font-weight: 600;
+        font-size: 1rem;
     }
     
-    /* Animação de loading */
-    @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
-    }
-    
-    .loading {
-        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    }
-    
-    /* Melhorias gerais para elementos Gradio */
-    .gr-panel {
-        background: #0f0f0f !important;
-        border: 1px solid #2a2a2a !important;
-    }
-    
-    .gr-padded {
-        padding: 1.5rem !important;
-    }
-    
-    .gr-compact {
-        background: #0a0a0a !important;
-    }
-    
-    /* Estado hover para elementos interativos */
-    .gr-check-radio:hover {
-        background: #1a1a1a !important;
-    }
-    
-    /* Links */
-    a {
+    .footer-info a {
         color: #60a5fa !important;
         text-decoration: none !important;
+        font-weight: 500;
+        transition: all 0.3s ease;
     }
     
-    a:hover {
+    .footer-info a:hover {
         color: #93c5fd !important;
         text-decoration: underline !important;
     }
+    
+    .footer-info strong {
+        color: #f3f4f6 !important;
+        font-weight: 600;
+    }
+    
+    /* Status do email */
+    #email-status {
+        text-align: center;
+        padding: 1rem;
+        border-radius: 12px;
+        margin-top: 1rem;
+        font-weight: 500;
+    }
+    
+    /* Loading state */
+    .loading {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .loading::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+        animation: shimmer 2s infinite;
+    }
+    
+    @keyframes shimmer {
+        100% {
+            left: 100%;
+        }
+    }
+    
+    /* Responsividade */
+    @media (max-width: 768px) {
+        .contain {
+            padding: 2rem 1rem !important;
+        }
+        
+        #title-header h1 {
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+        }
+        
+        .gr-form, .gr-box, .gr-group {
+            padding: 1.5rem !important;
+        }
+        
+        .gr-button-primary {
+            padding: 0.875rem 2rem !important;
+            font-size: 0.95rem !important;
+        }
+        
+        #report-output {
+            padding: 1.5rem !important;
+            min-height: 400px !important;
+        }
+    }
+    
+    /* Animações sutis */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .gr-form, .gr-box, .gr-group {
+        animation: fadeIn 0.5s ease-out;
+    }
+    
+    /* Glowing effect no hover dos inputs */
+    textarea:hover, input:hover {
+        border-color: #2a2a2a !important;
+    }
+    
+    /* Badge style */
+    .badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        background: rgba(59, 130, 246, 0.1);
+        color: #60a5fa;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
 """
 
-# Configuração da interface com tema dark
-# Theme e CSS serão passados para launch() para compatibilidade com Gradio 6.0
-theme_config = gr.themes.Default(
+# Configuração do tema
+theme_config = gr.themes.Base(
     primary_hue="blue",
     secondary_hue="purple",
-    neutral_hue="gray",
-    spacing_size="md",
+    neutral_hue="slate",
+    spacing_size="lg",
     radius_size="lg",
     font=[gr.themes.GoogleFont("Inter"), "system-ui", "sans-serif"]
+).set(
+    body_background_fill="*neutral_950",
+    body_background_fill_dark="*neutral_950",
+    background_fill_primary="*neutral_900",
+    background_fill_primary_dark="*neutral_900",
+    background_fill_secondary="*neutral_800",
+    background_fill_secondary_dark="*neutral_800",
 )
 
-with gr.Blocks(
-    title="Deep Research - Ferramenta de Pesquisa Avançada com IA"
-) as ui:
+with gr.Blocks(title="Deep Research - Pesquisa Avançada com IA") as ui:
     
-    # Cabeçalho com título animado
+    # Header
     gr.HTML("""
         <div id="title-header">
             <h1>🔬 Deep Research</h1>
+            <p class="subtitle">
+                Ferramenta profissional de pesquisa com IA para análises detalhadas e relatórios completos
+            </p>
         </div>
     """)
     
-    # Subtítulo
-    gr.Markdown(
-        """<div id="subtitle">
-        Ferramenta avançada de pesquisa com IA para análises profundas e relatórios detalhados
-        </div>""",
-        elem_id="subtitle"
-    )
+    # Seção de Input
+    with gr.Group():
+        gr.HTML("""
+            <div class="section-header">
+                <span style="font-size: 1.5rem;">🔍</span>
+                <h3>Defina seu Tópico de Pesquisa</h3>
+            </div>
+        """)
+        
+        query_textbox = gr.Textbox(
+            label="Tópico de Pesquisa",
+            placeholder="Ex: Tendências em inteligência artificial generativa | Impactos da computação quântica | Análise do mercado financeiro...",
+            lines=4,
+            max_lines=6
+        )
+        
+        email_textbox = gr.Textbox(
+            label="Email para Recebimento (Opcional)",
+            placeholder="seu@email.com",
+            lines=1
+        )
+        
+        with gr.Row():
+            gr.Column(scale=1)
+            run_button = gr.Button(
+                "🚀 Iniciar Pesquisa",
+                variant="primary",
+                size="lg",
+                scale=3
+            )
+            gr.Column(scale=1)
     
-    # Container principal
-    with gr.Column(scale=1, min_width=320):
+    # Divisor
+    gr.HTML("<hr style='margin: 3rem 0;'>")
+    
+    # Seção de Resultados
+    with gr.Group():
+        gr.HTML("""
+            <div class="section-header">
+                <span style="font-size: 1.5rem;">📊</span>
+                <h3>Relatório Detalhado</h3>
+            </div>
+        """)
         
-        # Seção de input
-        with gr.Group():
-            gr.Markdown("### 🔍 Digite o tópico de pesquisa")
-            
-            query_textbox = gr.Textbox(
-                label="Tópico de Pesquisa",
-                placeholder="Ex: Quais são as últimas tendências em inteligência artificial? | Como funciona a computação quântica? | Análise do mercado de criptomoedas...",
-                lines=3,
-                max_lines=5,
-                elem_id="query-input"
-            )
-            
-            # Campo de email
-            email_textbox = gr.Textbox(
-                label="📧 Email para receber o relatório (opcional)",
-                placeholder="seu@email.com",
-                lines=1,
-                elem_id="email-input"
-            )
-            
-            # Botões centralizados
-            with gr.Row():
-                gr.Column(scale=1)
-                run_button = gr.Button(
-                    "Gerar Relatório",
-                    variant="primary",
-                    size="lg",
-                    scale=2,
-                    elem_id="run-btn"
-                )
-                gr.Column(scale=1)
+        report = gr.Markdown(
+            value="*✨ Pronto para começar! Digite um tópico acima e clique em 'Iniciar Pesquisa' para gerar um relatório completo.*",
+            elem_id="report-output"
+        )
         
-        # Separador visual
-        gr.Markdown("---")
-        
-        # Seção de resultados
-        with gr.Group():
-            gr.Markdown("### Relatório de Pesquisa")
-            
-            report = gr.Markdown(
-                label="",
-                value="*Aguardando pesquisa... Digite um tópico acima e clique em 'Iniciar Pesquisa'*",
-                elem_id="report-output",
-                height=600
-            )
-            
-            # Botão para enviar por email
-            with gr.Row():
-                gr.Column(scale=1)
-                email_button = gr.Button(
-                    "📧 Enviar por Email",
-                    variant="secondary",
-                    size="md",
-                    scale=2,
-                    elem_id="email-btn",
-                    visible=False
-                )
-                gr.Column(scale=1)
-            
-            # Status do email
-            email_status = gr.Markdown(
-                value="",
-                elem_id="email-status",
+        with gr.Row():
+            gr.Column(scale=1)
+            email_button = gr.Button(
+                "📧 Enviar por Email",
+                variant="secondary",
+                size="md",
+                scale=2,
                 visible=False
             )
+            gr.Column(scale=1)
+        
+        email_status = gr.Markdown(
+            value="",
+            elem_id="email-status",
+            visible=False
+        )
     
-    # Footer informativo
-    # Footer informativo
+    # Footer
     gr.HTML("""
         <div class="footer-info">
-            <p class="tip">💡 Dica: Seja específico em suas perguntas para obter resultados mais detalhados</p>
-            
-            <p style="font-size: 0.9rem; color: #60a5fa; margin: 1rem 0;">
-                👨‍💻 Criado por <strong>Lucca Romagnolli</strong> | 
-                <a href="https://www.linkedin.com/in/lucca-maximus-6792a1221/" target="_blank" style="color: #60a5fa; text-decoration: none;">
+            <p class="tip">💡 Dica Profissional: Perguntas específicas geram análises mais precisas e detalhadas</p>
+            <p style="margin-top: 1.5rem;">
+                <span style="color: #6b7280;">Desenvolvido por</span> 
+                <strong>Lucca Romagnolli</strong> 
+                <span style="color: #6b7280;">|</span> 
+                <a href="https://www.linkedin.com/in/lucca-maximus-6792a1221/" target="_blank">
                     🔗 LinkedIn
                 </a>
             </p>
-            <p style="font-size: 0.8rem; color: #4b5563;">© 2024 Deep Research - Todos os direitos reservados</p>
+            <p style="font-size: 0.875rem; color: #4b5563; margin-top: 1rem;">
+                © 2024 Deep Research - Tecnologia de Pesquisa Avançada
+            </p>
         </div>
     """)
-    # Função para mostrar/esconder botão de email
+    
+    # Funções de controle
     def toggle_email_button(report_text):
-        if report_text and report_text != "*Aguardando pesquisa... Digite um tópico acima e clique em 'Iniciar Pesquisa'*":
+        if report_text and not report_text.startswith("*✨"):
             return gr.update(visible=True)
         return gr.update(visible=False)
     
-    # Função para enviar email
     async def send_email_wrapper(email, report):
         if not email or not email.strip():
-            return gr.update(value="❌ Por favor, insira um email válido", visible=True)
+            return gr.update(
+                value="<div style='background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 1rem; border-radius: 12px; border: 1px solid rgba(239, 68, 68, 0.2);'>❌ Por favor, insira um email válido</div>",
+                visible=True
+            )
         
-        if not report or report == "*Aguardando pesquisa... Digite um tópico acima e clique em 'Iniciar Pesquisa'*":
-            return gr.update(value="❌ Nenhum relatório disponível para enviar", visible=True)
+        if not report or report.startswith("*✨"):
+            return gr.update(
+                value="<div style='background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 1rem; border-radius: 12px; border: 1px solid rgba(239, 68, 68, 0.2);'>❌ Nenhum relatório disponível para enviar</div>",
+                visible=True
+            )
         
         result = await send_report_email(email.strip(), report)
-        return gr.update(value=result, visible=True)
+        
+        if result.startswith("✅"):
+            return gr.update(
+                value=f"<div style='background: rgba(16, 185, 129, 0.1); color: #10b981; padding: 1rem; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.2);'>{result}</div>",
+                visible=True
+            )
+        else:
+            return gr.update(
+                value=f"<div style='background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 1rem; border-radius: 12px; border: 1px solid rgba(239, 68, 68, 0.2);'>{result}</div>",
+                visible=True
+            )
     
-    # Conectar eventos
+    # Eventos
     run_button.click(
         fn=run,
         inputs=query_textbox,
@@ -450,30 +597,23 @@ with gr.Blocks(
         outputs=email_button
     )
     
-    # Evento do botão de email
     email_button.click(
         fn=send_email_wrapper,
         inputs=[email_textbox, report],
         outputs=email_status
     )
 
-# Exportar a UI para uso externo
 app = ui
 
-# Lançar aplicação com configurações otimizadas (apenas quando executado diretamente)
-# ... existing code ...
-
-# Lançar aplicação com configurações otimizadas (apenas quando executado diretamente)
 if __name__ == "__main__":
-    # Obter porta do ambiente (Google Cloud Run usa PORT=8080)
     port = int(os.environ.get("PORT", 7860))
     
     ui.launch(
         theme=theme_config,
         css=custom_css,
-        inbrowser=False,  # Desabilitar browser automático no Cloud Run
+        inbrowser=False,
         share=False,
-        server_name="0.0.0.0",  # Escutar em todas as interfaces
-        server_port=port,       # Usar porta do ambiente
+        server_name="0.0.0.0",
+        server_port=port,
         show_error=True
     )
