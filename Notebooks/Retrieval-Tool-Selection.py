@@ -100,7 +100,6 @@ index_to_tool = {
 }
 
 
-
 # %% BLOCK 5: Function to Retrieve Relevant Tools Based on User Query
 
 def select_tool(query: str, top_k: int = 1) -> list:
@@ -152,7 +151,6 @@ def determine_parameters(query: str, tool_name: str) -> dict:
         parameters["channel"] = response.get('channel', "#general")
         parameters["message"] = response.get('message', query)
     return parameters
-
 
 
 
